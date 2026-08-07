@@ -14,7 +14,7 @@ public class DualMotorFlywheelShooterSample extends OpMode {
 
     @Override
     public void init() {
-        shooter = new DualMotorFlywheelShooter(hardwareMap);
+        shooter = new DualMotorFlywheelShooter(hardwareMap, telemetry);
     }
 
     @Override

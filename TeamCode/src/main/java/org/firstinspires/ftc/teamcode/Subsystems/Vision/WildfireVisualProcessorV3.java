@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Subsystems;
+package org.firstinspires.ftc.teamcode.Subsystems.Vision;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -13,7 +13,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
-public class WildfireVisualProcessorBlueShift implements VisionProcessor {
+public class WildfireVisualProcessorV3 implements VisionProcessor {
 
     private Telemetry telemetry = null;
 
@@ -35,14 +35,14 @@ public class WildfireVisualProcessorBlueShift implements VisionProcessor {
     private double leftUpperLuma = 0;
     private double rightUpperLuma = 0;
 
-    private final Scalar lower = new Scalar(140, 100, 50);
-    private final Scalar upper = new Scalar(160, 255, 255);
+    private final Scalar lower = new Scalar(5, 128, 50);
+    private final Scalar upper = new Scalar(30, 255, 255);
 
     private Mat hsvMat = new Mat();
     private Mat binaryMat = new Mat();
     private Mat maskedInputMat = new Mat();
 
-    public WildfireVisualProcessorBlueShift(Telemetry telemetry) {
+    public WildfireVisualProcessorV3(Telemetry telemetry) {
         this.telemetry = telemetry;
     }
 

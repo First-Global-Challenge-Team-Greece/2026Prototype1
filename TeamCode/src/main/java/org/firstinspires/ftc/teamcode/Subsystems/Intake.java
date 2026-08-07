@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -9,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Config.HardwareMapConfig;
+import org.firstinspires.ftc.teamcode.Config.IntakeConfig;
 
 public class Intake {
 
@@ -18,15 +18,13 @@ public class Intake {
 
     private ExtensionState extensionState = ExtensionState.RETRACTED;
 
-    private final double MAX_MOTOR_POWER = 0.8;
-    private final boolean USE_SENSORS = false;
 
     private final Telemetry telemetry;
 
-    private DcMotorEx leftExtension;
-    private DcMotorEx rightExtension;
+    private final DcMotorEx leftExtension;
+    private final DcMotorEx rightExtension;
 
-    private DcMotorEx intakeMotor;
+    private final DcMotorEx intakeMotor;
 
     private DigitalChannel intakeExtensionSensor;
     private DigitalChannel intakeRetractionSensor;
@@ -38,7 +36,7 @@ public class Intake {
 
         intakeMotor = hardwareMap.get(DcMotorEx.class, HardwareMapConfig.intake_motor_id);
 
-        if (USE_SENSORS) {
+        if (IntakeConfig.USE_SENSORS) {
             intakeExtensionSensor = hardwareMap.get(DigitalChannel.class, HardwareMapConfig.intake_extension_magnetic_sensor_id);
             intakeRetractionSensor = hardwareMap.get(DigitalChannel.class, HardwareMapConfig.intake_retraction_magnetic_sensor_id);
             intakeExtensionSensor.setMode(DigitalChannel.Mode.INPUT);
@@ -49,7 +47,7 @@ public class Intake {
     }
 
     public void collect() {
-        intakeMotor.setPower(MAX_MOTOR_POWER);
+        intakeMotor.setPower(IntakeConfig.MAX_MOTOR_POWER);
     }
 
     public void stop() {
@@ -73,8 +71,8 @@ public class Intake {
                     break;
                 }
 
-                leftExtension.setPower(MAX_MOTOR_POWER);
-                rightExtension.setPower(MAX_MOTOR_POWER);
+                leftExtension.setPower(IntakeConfig.MAX_MOTOR_POWER);
+                rightExtension.setPower(IntakeConfig.MAX_MOTOR_POWER);
                 break;
             case RETRACTED:
                 if (intakeRetractionSensor.getState()) {
@@ -83,8 +81,8 @@ public class Intake {
                     break;
                 }
 
-                leftExtension.setPower(-MAX_MOTOR_POWER);
-                rightExtension.setPower(-MAX_MOTOR_POWER);
+                leftExtension.setPower(-IntakeConfig.MAX_MOTOR_POWER);
+                rightExtension.setPower(-IntakeConfig.MAX_MOTOR_POWER);
                 break;
         }
     }

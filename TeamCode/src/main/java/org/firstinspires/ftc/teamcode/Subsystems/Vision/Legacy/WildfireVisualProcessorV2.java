@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Subsystems;
+package org.firstinspires.ftc.teamcode.Subsystems.Vision.Legacy;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -13,6 +13,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+@Deprecated
 public class WildfireVisualProcessorV2 implements VisionProcessor {
 
     private Telemetry telemetry = null;

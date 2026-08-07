@@ -16,7 +16,7 @@ public class FlywheelShooterTuning extends OpMode {
 
     @Override
     public void init() {
-        shooter = new DualMotorFlywheelShooter(hardwareMap);
+        shooter = new DualMotorFlywheelShooter(hardwareMap, telemetry);
         dashboardTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         telemetry.addLine("Tuning instructions:");
