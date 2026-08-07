@@ -23,4 +23,9 @@ public class HardwareMapConfig {
 
     public final static String intake_extension_magnetic_sensor_id = "iems";
     public final static String intake_retraction_magnetic_sensor_id = "irms";
+
+    public static final String shooter_motor_id = "sm";
+
+    public static final String left_shooter_motor_id = "lsm";
+    public static final String right_shooter_motor_id = "rsm";
 }
