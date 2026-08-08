@@ -28,7 +28,7 @@ public class FlywheelShooterTuning extends OpMode {
     @Override
     public void loop() {
         shooter.tune();
-        shooter.debug(dashboardTelemetry);
+        shooter.debug();
         dashboardTelemetry.update();
     }
 }

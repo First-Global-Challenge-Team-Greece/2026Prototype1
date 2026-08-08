@@ -1,26 +1,30 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 
-import static org.firstinspires.ftc.teamcode.Config.OmniDriveConfig.MOTOR_ZERO_POWER_BEHAVIOR;
-import static org.firstinspires.ftc.teamcode.Config.OmniDriveConfig.ROBOT_IMU_TYPE;
+import static org.firstinspires.ftc.teamcode.Config.OmniDriveConfig.*;
 
+import com.github.bouyio.cyancore.debugger.Debuggers;
+import com.github.bouyio.cyancore.debugger.formating.MessageLevel;
+import com.github.bouyio.cyancore.geomery.Point;
 import com.github.bouyio.cyancore.geomery.Pose2D;
+import com.github.bouyio.cyancore.localization.GyroTankOdometry;
+import com.github.bouyio.cyancore.localization.PositionProvider;
+import com.github.bouyio.cyancore.pathing.Path;
+import com.github.bouyio.cyancore.pathing.PathSequence;
+import com.github.bouyio.cyancore.pathing.engine.PathFollower;
 import com.github.bouyio.cyancore.pathing.engine.TankDriveVectorInterpreter;
-import com.github.bouyio.cyancore.util.MathUtil;
-import com.github.bouyio.cyancore.util.PIDCoefficients;
-import com.github.bouyio.cyancore.util.PIDController;
+import com.github.bouyio.cyancore.util.*;
+import com.github.bouyio.cyanftc.debugger.TelemetryExporter;
 import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-import org.firstinspires.ftc.teamcode.Config.HardwareMapConfig;
-import org.firstinspires.ftc.teamcode.Config.OmniDriveConfig;
-import org.firstinspires.ftc.teamcode.Config.TankDriveConfig;
+import org.firstinspires.ftc.teamcode.Config.*;
 
 public class TankDrive {
 
@@ -29,7 +33,11 @@ public class TankDrive {
     private PIDController autoDrivePID;
     private PIDCoefficients autoDriveCoefficients;
 
-    private TankDriveVectorInterpreter fieldCentricEngine;
+    private final TelemetryExporter exporter;
+
+    private GyroTankOdometry odometry = null;
+    private PathFollower pathFollower = null;
+
 
     public enum DriveMode {
         ROBOT_CENTRIC, FIELD_CENTRIC
@@ -57,6 +65,7 @@ public class TankDrive {
 
         this.driveMode = driveMode;
 
+        exporter = new TelemetryExporter(telemetry, 50);
         if (driveMode == DriveMode.FIELD_CENTRIC) {
             if (ROBOT_IMU_TYPE == OmniDriveConfig.ImuType.BHI260)
                 imu = hardwareMap.get(BHI260IMU.class, HardwareMapConfig.IMU_ID);
@@ -70,6 +79,24 @@ public class TankDrive {
 
             imu.initialize(new IMU.Parameters(orientationOnRobot));
             imu.resetYaw();
+
+            GyroTankOdometry.MeasurementProvider measurementProvider = new GyroTankOdometry.MeasurementProvider(
+                    leftDrive::getCurrentPosition,
+                    rightDrive::getCurrentPosition,
+                    () -> imu.getRobotYawPitchRollAngles().getYaw(),
+                    TankDriveConfig.TICKS_TO_CM
+            );
+
+            odometry = new GyroTankOdometry(Distance.DistanceUnit.CM, measurementProvider);
+
+            pathFollower = new PathFollower(odometry,
+                    new TankDriveVectorInterpreter(true, TankDriveVectorInterpreter.TankReverseSideParameters.RIGHT),
+                    new PIDController(1 , 0, 0));
+            pathFollower.purePursuitSetUp(1, 4);
+
+            pathFollower.attachLogger(Debuggers.getGlobalLogger());
+            pathFollower.attachExporters(exporter);
+
         }
 
         autoTargetCoefficients = new PIDCoefficients(TankDriveConfig.AUTO_TARGET_KP, TankDriveConfig.AUTO_TARGET_KI, TankDriveConfig.AUTO_TARGET_KD);
@@ -78,16 +105,22 @@ public class TankDrive {
         autoDriveCoefficients = new PIDCoefficients(TankDriveConfig.AUTO_DRIVE_KP, TankDriveConfig.AUTO_DRIVE_KI, TankDriveConfig.AUTO_DRIVE_KD);
         autoDrivePID = new PIDController(autoDriveCoefficients);
 
-        fieldCentricEngine = new TankDriveVectorInterpreter(true, TankDriveVectorInterpreter.TankReverseSideParameters.RIGHT);
 
         this.telemetry = telemetry;
         telemetry.addData("Drive Train", "INITIALIZED");
     }
 
     public void driveFieldCentric(double x, double y) {
-        double angle = Math.toRadians(imu.getRobotYawPitchRollAngles().getYaw()) - Math.atan2(y, x);
+        double angle = Math.toDegrees(Math.atan2(y, x));
+        double robotHeading = imu.getRobotYawPitchRollAngles().getYaw();
 
-        fieldCentricEngine.process(new Pose2D(x, y, angle));
+        angle = MathUtil.shiftAngle(robotHeading, angle);
+
+        double turn = angle / 180;
+        double forward = Math.hypot(x, y);
+
+        driveRobotCentric(forward, turn);
+
     }
 
     public void driveRobotCentric(double forward, double turn) {
@@ -130,7 +163,44 @@ public class TankDrive {
     }
 
     private void setPowersWithFeedForward(double leftPower, double rightPower) {
-        setPowers(TankDriveConfig.KS_LEFT * Math.signum(leftPower) + TankDriveConfig.KV_LEFT * leftPower, TankDriveConfig.KS_RIGHT * Math.signum(rightPower) + TankDriveConfig.KV_RIGHT * rightPower);
+        setPowers(TankDriveConfig.KS_LEFT * Math.signum(leftPower) + TankDriveConfig.KV_LEFT * leftPower,
+                TankDriveConfig.KS_RIGHT * Math.signum(rightPower) + TankDriveConfig.KV_RIGHT * rightPower);
+    }
+
+
+    public Pose2D getCurrentPosition() {
+        odometry.update();
+        return odometry.getPose();
+    }
+
+    public void followPoint(Point point) {
+        odometry.update();
+
+        pathFollower.followPoint(point);
+
+        double[] motorPowers = pathFollower.getCalculatedPowers();
+        setPowers(motorPowers[TankDriveVectorInterpreter.LEFT_MOTOR_INDEX_ID], motorPowers[TankDriveVectorInterpreter.RIGHT_MOTOR_INDEX_ID]);
+        pathFollower.log();
+    }
+
+    public void followPath(Path path) {
+        odometry.update();
+
+        pathFollower.followPath(path);
+
+        double[] motorPowers = pathFollower.getCalculatedPowers();
+        setPowers(motorPowers[TankDriveVectorInterpreter.LEFT_MOTOR_INDEX_ID], motorPowers[TankDriveVectorInterpreter.RIGHT_MOTOR_INDEX_ID]);
+        pathFollower.log();
+    }
+
+    public void followPathSequence(PathSequence sequence) {
+        odometry.update();
+
+        pathFollower.followPathSequence(sequence);
+
+        double[] motorPowers = pathFollower.getCalculatedPowers();
+        setPowers(motorPowers[TankDriveVectorInterpreter.LEFT_MOTOR_INDEX_ID], motorPowers[TankDriveVectorInterpreter.RIGHT_MOTOR_INDEX_ID]);
+        pathFollower.log();
     }
 
 
@@ -145,9 +215,17 @@ public class TankDrive {
         };
     }
 
+    public PositionProvider getOdometry() {
+        return odometry;
+    }
+
     public void debug() {
         telemetry.addLine("|----- Drivetrain -----|");
         telemetry.addData("Left Drive Current", leftDrive.getCurrent(CurrentUnit.AMPS));
         telemetry.addData("Right Drive Current", rightDrive.getCurrent(CurrentUnit.AMPS));
+    }
+
+    public void cyanDebug() {
+        exporter.export();
     }
 }

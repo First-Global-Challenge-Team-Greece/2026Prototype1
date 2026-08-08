@@ -45,6 +45,8 @@ public class DualMotorFlywheelShooter extends FlywheelShooter {
 
     public void debug() {
         telemetry.addLine("|----- Shooter -----|");
+        super.debug(telemetry);
+        telemetry.addLine();
         telemetry.addData("Left Shooter Current", leftShooterMotor.getCurrent(CurrentUnit.AMPS));
         telemetry.addData("Right Shooter Current", rightShooterMotor.getCurrent(CurrentUnit.AMPS));
     }

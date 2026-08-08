@@ -12,7 +12,7 @@ public class DebouncedButton {
 
     public boolean update(boolean buttonInput) {
 
-        if ((System.currentTimeMillis() - lastUpdateMS > DEBOUNCE_TIME_MS) && buttonInput) {
+        if (((System.currentTimeMillis() - lastUpdateMS) > DEBOUNCE_TIME_MS) && buttonInput) {
             lastUpdateMS = System.currentTimeMillis();
             return true;
         }

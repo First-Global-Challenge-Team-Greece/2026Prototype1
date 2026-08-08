@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Subsystems;
+package org.firstinspires.ftc.teamcode.Subsystems.Vision;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.Config.HardwareMapConfig;
 import org.firstinspires.ftc.teamcode.Util.IgnitingInnovationGameDatabase;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.firstinspires.ftc.vision.apriltag.AprilTagLibrary;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;

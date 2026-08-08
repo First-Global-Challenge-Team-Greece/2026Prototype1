@@ -45,4 +45,11 @@ public class TankDriveConfig {
     public static double AUTO_DRIVE_KP = 3;
     public static double AUTO_DRIVE_KI = 0;
     public static double AUTO_DRIVE_KD = 0.2;
+
+    public static double ENCODER_CPR = 28;
+    public static double GEAR_RATIO = 12;
+
+    public static double WHEEL_RADIUS = 4.5;
+
+    public static double TICKS_TO_CM = 2 * Math.PI * WHEEL_RADIUS / (ENCODER_CPR * GEAR_RATIO);
 }

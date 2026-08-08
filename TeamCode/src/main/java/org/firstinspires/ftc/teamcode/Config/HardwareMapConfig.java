@@ -16,8 +16,7 @@ public class HardwareMapConfig {
 
     public final static String webcam_id = "webcam";
 
-    public final static String left_intake_extension_motor_id = "lem";
-    public final static String right_intake_extension_motor_id = "rem";
+    public final static String intake_extension_motor_id = "iem";
 
     public final static String intake_motor_id = "im";
 
@@ -28,4 +27,6 @@ public class HardwareMapConfig {
 
     public static final String left_shooter_motor_id = "lsm";
     public static final String right_shooter_motor_id = "rsm";
+
+    public static final String feeder_motor_id = "fm";
 }

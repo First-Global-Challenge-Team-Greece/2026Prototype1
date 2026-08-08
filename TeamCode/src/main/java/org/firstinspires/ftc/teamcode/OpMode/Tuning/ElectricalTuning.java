@@ -6,19 +6,22 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.TankDrive;
 import org.firstinspires.ftc.teamcode.Util.ButtonToggle;
+import org.firstinspires.ftc.teamcode.Util.DebouncedButton;
 import org.firstinspires.ftc.teamcode.Util.GlobalDebugVariables;
 
 @TeleOp()
 public class ElectricalTuning extends OpMode {
 
-    private ButtonToggle intakeToggle;
+    private DebouncedButton intakeButton;
+    private DebouncedButton outtakeButton;
 
     private TankDrive tankDrive;
     private Intake intake;
 
     @Override
     public void init() {
-        intakeToggle = new ButtonToggle(300);
+        intakeButton = new DebouncedButton(300);
+        outtakeButton = new DebouncedButton(300);
         intake = new Intake(hardwareMap, telemetry);
         tankDrive = new TankDrive(hardwareMap, telemetry, TankDrive.DriveMode.ROBOT_CENTRIC);
     }
@@ -32,8 +35,23 @@ public class ElectricalTuning extends OpMode {
             intake.MANUAL_EXTENSION_INTERFACE(-0.8);
         } else intake.MANUAL_EXTENSION_INTERFACE(0);
 
-        if (intakeToggle.update(gamepad1.a)) intake.collect();
-        else intake.stop();
+        boolean intakeBinding = intakeButton.update(gamepad1.a);
+        boolean outtakeBinding = outtakeButton.update(gamepad1.b);
+
+        if (intakeBinding && intake.getIntakeState() == Intake.IntakeState.COLLECTING)
+            intake.setIntakeState(Intake.IntakeState.STOPPED);
+
+        else if (outtakeBinding && intake.getIntakeState() == Intake.IntakeState.DROPPING)
+            intake.setIntakeState(Intake.IntakeState.STOPPED);
+
+        else if (intakeBinding)
+            intake.setIntakeState(Intake.IntakeState.COLLECTING);
+
+        else if (outtakeBinding)
+            intake.setIntakeState(Intake.IntakeState.DROPPING);
+
+
+        intake.intakeStateManager();
 
         tankDrive.driveRobotCentric(-gamepad1.left_stick_y, gamepad1.right_stick_x);
 
@@ -50,5 +68,7 @@ public class ElectricalTuning extends OpMode {
         telemetry.addLine("|----- System Info -----|");
         telemetry.addData("Total System Current", GlobalDebugVariables.currentSum);
         telemetry.addData("Peak System Current", GlobalDebugVariables.maxCurrentSum);
+
+        telemetry.addData("State", intake.getIntakeState());
     }
 }

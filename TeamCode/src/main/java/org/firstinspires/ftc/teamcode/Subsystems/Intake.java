@@ -16,13 +16,17 @@ public class Intake {
         EXTENDED, RETRACTED
     }
 
+    public enum IntakeState {
+        COLLECTING, DROPPING, STOPPED
+    }
+
     private ExtensionState extensionState = ExtensionState.RETRACTED;
+    private IntakeState intakeState = IntakeState.STOPPED;
 
 
     private final Telemetry telemetry;
 
-    private final DcMotorEx leftExtension;
-    private final DcMotorEx rightExtension;
+    private final DcMotorEx extensionMotor;
 
     private final DcMotorEx intakeMotor;
 
@@ -30,9 +34,8 @@ public class Intake {
     private DigitalChannel intakeRetractionSensor;
 
     public Intake(HardwareMap hardwareMap, Telemetry telemetry) {
-        leftExtension = hardwareMap.get(DcMotorEx.class, HardwareMapConfig.left_intake_extension_motor_id);
-        rightExtension = hardwareMap.get(DcMotorEx.class, HardwareMapConfig.right_intake_extension_motor_id);
-        leftExtension.setDirection(DcMotorSimple.Direction.REVERSE);
+        extensionMotor = hardwareMap.get(DcMotorEx.class, HardwareMapConfig.intake_extension_motor_id);
+        extensionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         intakeMotor = hardwareMap.get(DcMotorEx.class, HardwareMapConfig.intake_motor_id);
 
@@ -48,6 +51,10 @@ public class Intake {
 
     public void collect() {
         intakeMotor.setPower(IntakeConfig.MAX_MOTOR_POWER);
+    }
+
+    public void drop() {
+        intakeMotor.setPower(-IntakeConfig.MAX_MOTOR_POWER);
     }
 
     public void stop() {
@@ -66,36 +73,52 @@ public class Intake {
         switch (extensionState) {
             case EXTENDED:
                 if (intakeExtensionSensor.getState()) {
-                    leftExtension.setPower(0);
-                    rightExtension.setPower(0);
+                    extensionMotor.setPower(0);
                     break;
                 }
 
-                leftExtension.setPower(IntakeConfig.MAX_MOTOR_POWER);
-                rightExtension.setPower(IntakeConfig.MAX_MOTOR_POWER);
+                extensionMotor.setPower(IntakeConfig.MAX_MOTOR_POWER);
                 break;
             case RETRACTED:
                 if (intakeRetractionSensor.getState()) {
-                    leftExtension.setPower(0);
-                    rightExtension.setPower(0);
+                    extensionMotor.setPower(0);
                     break;
                 }
 
-                leftExtension.setPower(-IntakeConfig.MAX_MOTOR_POWER);
-                rightExtension.setPower(-IntakeConfig.MAX_MOTOR_POWER);
+                extensionMotor.setPower(-IntakeConfig.MAX_MOTOR_POWER);
                 break;
         }
     }
 
+    public void intakeStateManager() {
+        switch (intakeState) {
+            case STOPPED:
+                stop();
+                break;
+            case DROPPING:
+                drop();
+                break;
+            case COLLECTING:
+                collect();
+                break;
+        }
+    }
+
+    public void setIntakeState(IntakeState intakeState) {
+        this.intakeState = intakeState;
+    }
+
+    public IntakeState getIntakeState() {
+        return intakeState;
+    }
+
     public void MANUAL_EXTENSION_INTERFACE(double power) {
-        leftExtension.setPower(power);
-        rightExtension.setPower(power);
+        extensionMotor.setPower(power);
     }
 
     public double[] getMotorCurrents() {
         return new double[] {
-                leftExtension.getCurrent(CurrentUnit.AMPS),
-                rightExtension.getCurrent(CurrentUnit.AMPS),
+                extensionMotor.getCurrent(CurrentUnit.AMPS),
                 intakeMotor.getCurrent(CurrentUnit.AMPS)
         };
     }
@@ -103,7 +126,6 @@ public class Intake {
     public void debug() {
         telemetry.addLine("|----- Intake -----|");
         telemetry.addData("Intake Current", intakeMotor.getCurrent(CurrentUnit.AMPS));
-        telemetry.addData("Left Extension Current", leftExtension.getCurrent(CurrentUnit.AMPS));
-        telemetry.addData("Right Extension Current", rightExtension.getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("Extension Current", extensionMotor.getCurrent(CurrentUnit.AMPS));
     }
 }

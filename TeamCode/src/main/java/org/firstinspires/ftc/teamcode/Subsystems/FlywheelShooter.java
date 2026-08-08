@@ -23,7 +23,7 @@ public abstract class FlywheelShooter {
     abstract double getVelocity();
 
     protected boolean isShooterRpmReady() {
-        return (SHOOTING_VELOCITY - getVelocity()) < RPM_THRESHOLD;
+        return getVelocity() > RPM_THRESHOLD;
     }
 
     public ShooterState getShooterState() {
@@ -68,6 +68,11 @@ public abstract class FlywheelShooter {
     public void debug(Telemetry telemetry) {
         telemetry.addData("Current Velocity", getVelocity());
         telemetry.addData("Is Shooter RPM Ready", isShooterRpmReady());
+        telemetry.addData("Shooter State", shooterState);
+    }
+
+    public boolean isReady() {
+        return shooterState == ShooterState.READY;
     }
 
     public void tune() {

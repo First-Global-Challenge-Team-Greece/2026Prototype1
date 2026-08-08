@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.OpMode.Test;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Subsystems.TagCamera;
+import org.firstinspires.ftc.teamcode.Subsystems.Vision.TagCamera;
 import org.firstinspires.ftc.teamcode.Subsystems.TankDrive;
 import org.firstinspires.ftc.teamcode.Util.DriverNotifier;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
