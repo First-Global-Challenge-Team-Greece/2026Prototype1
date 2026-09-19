@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpMode.Test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -7,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.Subsystems.TankDrive;
-
+@Disabled
 @TeleOp()
 public class BraceTest extends OpMode {
 
@@ -43,7 +44,12 @@ public class BraceTest extends OpMode {
             right.setPower(0);
         }
 
-        braceMotor.setPower(gamepad1.a ? 0.8 : 0);
+        if (gamepad1.a) {
+            braceMotor.setPower(0.8);
+            left.close();
+            right.close();
+        } else braceMotor.setPower(0);
+
 
         tankDrive.driveRobotCentric(-gamepad1.left_stick_y, gamepad1.right_stick_x);
     }

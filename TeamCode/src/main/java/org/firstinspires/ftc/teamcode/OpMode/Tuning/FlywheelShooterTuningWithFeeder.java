@@ -5,21 +5,25 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Utility;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Subsystems.DualMotorFlywheelShooter;
+import org.firstinspires.ftc.teamcode.Subsystems.Feeder;
 
-@Utility()
-public class FlywheelShooterTuning extends OpMode {
+@Disabled
+@TeleOp()
+public class FlywheelShooterTuningWithFeeder extends OpMode {
 
     private DualMotorFlywheelShooter shooter;
+    private Feeder feeder;
     private Telemetry dashboardTelemetry;
 
     @Override
     public void init() {
         dashboardTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         shooter = new DualMotorFlywheelShooter(hardwareMap, dashboardTelemetry);
+
+        feeder = new Feeder(hardwareMap, telemetry);
 
         telemetry.addLine("Tuning instructions:");
         telemetry.addData("kS", "Set kP and kV to zero and TUNING_VELOCITY to 1. Completely stop the flywheel. Increase kS until flywheel barely moves.");
@@ -29,6 +33,10 @@ public class FlywheelShooterTuning extends OpMode {
 
     @Override
     public void loop() {
+        feeder.SHOOTER_INTERFACE(true);
+        if (gamepad1.a) feeder.feed();
+        else feeder.stop();
+
         shooter.tune();
         shooter.debug();
         dashboardTelemetry.update();

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpMode.Tuning;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,6 +9,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.TankDrive;
 import org.firstinspires.ftc.teamcode.Util.ButtonToggle;
 import org.firstinspires.ftc.teamcode.Util.DebouncedButton;
 import org.firstinspires.ftc.teamcode.Util.GlobalDebugVariables;
+
+@Disabled
 
 @TeleOp()
 public class ElectricalTuning extends OpMode {

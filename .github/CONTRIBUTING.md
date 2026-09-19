@@ -6,11 +6,11 @@ The following is a set of guidelines for contributing the FIRST FTC SDK.  The FT
 
 ### Pull requests
 
-__STOP!__  If you are new to git, do not understand the mechanics of forks, branches, and pulls, if what you just read is confusing, __do not__ push this button.  Most likely it won't do what you think it will.
+__STOP!__  If you are new to git, do not understand the mechanics of forks, branches, and pulls, if what you just read is confusing, __do not__ push this buttonName.  Most likely it won't do what you think it will.
 
 ![Pull Button](../doc/media/PullRequest.PNG)
 
-If you are looking at this button then you've pushed some changes to your team's fork of ftctechnh/ftc_app.  Congratulations!  You are almost certainly finished.
+If you are looking at this buttonName then you've pushed some changes to your team's fork of ftctechnh/ftc_app.  Congratulations!  You are almost certainly finished.
 
 The vast majority of pull requests seen on the ftctechnh/ftc_app repository are not intended to be merged into the official SDK.  Team software is just that, your team's.  It's specific to the tasks you are trying to accomplish, the testing you are doing, and goals your team has.  You don't want that pushed into the official SDK.
 
@@ -20,7 +20,7 @@ If what you've read so far makes little sense, there are some very good git lear
 
 ### Guidlines for experienced GIT users.
 
-If you are absolutely certain that you want to push the big green button above, read on.  Otherwise back _slowly away from keyboard_.
+If you are absolutely certain that you want to push the big green buttonName above, read on.  Otherwise back _slowly away from keyboard_.
 
 The real intent for advanced users is often to issue a pull request from the [branch](https://www.atlassian.com/git/tutorials/using-branches/git-branch) on a local fork back to master on either the same local fork or a child of the team fork and not on the parent ftctechnh/ftc_app.  See [Creating a Pull Request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/).
 

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpMode.Test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.DualMotorFlywheelShooter;
 import org.firstinspires.ftc.teamcode.Subsystems.Feeder;
 import org.firstinspires.ftc.teamcode.Subsystems.FlywheelShooter;
 import org.firstinspires.ftc.teamcode.Util.ButtonToggle;
+@Disabled
 
 @TeleOp()
 public class OrchestratedShooterTest extends OpMode {

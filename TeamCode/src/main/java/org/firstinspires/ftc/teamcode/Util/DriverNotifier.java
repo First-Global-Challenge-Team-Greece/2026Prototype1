@@ -27,7 +27,6 @@ public class DriverNotifier {
         public final Gamepad.RumbleEffect pattern;
     }
 
-    private final Telemetry telemetry;
     private final Gamepad gamepad;
 
     public double notificationVolume = 0.5;
@@ -37,8 +36,7 @@ public class DriverNotifier {
     private int minimumDeltaTime = rumblePaddingMS;
 
 
-    public DriverNotifier(Telemetry telemetry, Gamepad gamepad) {
-        this.telemetry = telemetry;
+    public DriverNotifier(Gamepad gamepad) {
         this.gamepad = gamepad;
     }
 

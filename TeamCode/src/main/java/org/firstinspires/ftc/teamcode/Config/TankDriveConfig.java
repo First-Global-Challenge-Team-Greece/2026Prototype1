@@ -20,10 +20,10 @@ public class TankDriveConfig {
     public static final double[] RIGHT_FEEDFORWARD = {0.03, 1.0}; // KS, KV for right motor
     public static final double KS_THETA = 0.08; // Static gain for turning
 
-    public static double KS_LEFT = 1;
-    public static double KS_RIGHT = 1;
+    public static double KS_LEFT = 0.066;
+    public static double KS_RIGHT = 0.099;
     public static double KV_RIGHT = 1;
-    public static double KV_LEFT = 1;
+    public static double KV_LEFT = 0.89;
 
     public final static RevHubOrientationOnRobot.LogoFacingDirection CONTROL_HUB_LOGO_DIRECTION =
             RevHubOrientationOnRobot.LogoFacingDirection.DOWN;

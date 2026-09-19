@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.OpMode.Test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Util.ButtonToggle;
+@Disabled
 
 @TeleOp()
 public class ExtensionTest extends OpMode {

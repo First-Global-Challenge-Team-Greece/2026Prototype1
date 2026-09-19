@@ -8,22 +8,24 @@ public class FlywheelShooterConfig {
     public static double ENCODER_CPR = 28;
     public static double SECOND_TO_MINUTE_COEFFICIENT = 60;
 
-    public static double IDLE_VELOCITY = 3000;
-    public static double SHOOTING_VELOCITY = 4000;
+    public static double IDLE_VELOCITY = 2000;
+    public static double SHOOTING_VELOCITY = 4700;
     public static double STALLED_VELOCITY = 0;
-    public static double RPM_THRESHOLD = 3000;
+    public static double RPM_THRESHOLD = 3500;
 
     public static double TUNING_VELOCITY = 2000;
 
-    public static double kP = 0.007;
-    public static double kV = 0.0001795;
-    public static double kS = 0.1;
+    public static double kP = 0.0007;
+    public static double kV = 0.000169;
+    public static double kS = 0.06;
+
+    public static double VELOCITY_DROP_COUNT_THRESHOLD = 100;
 
     // ----SINGLE MOTOR FLYWHEEL CONFIG----
     public static DcMotorSimple.Direction FLYWHEEL_MOTOR_DIRECTION = DcMotorSimple.Direction.FORWARD;
 
     // ----DUAL MOTOR FLYWHEEL CONFIG----
-    public static DcMotorSimple.Direction LEFT_FLYWHEEL_MOTOR_DIRECTION = DcMotorSimple.Direction.REVERSE;
-    public static DcMotorSimple.Direction RIGHT_FLYWHEEL_MOTOR_DIRECTION = DcMotorSimple.Direction.FORWARD;
+    public static DcMotorSimple.Direction LEFT_FLYWHEEL_MOTOR_DIRECTION = DcMotorSimple.Direction.FORWARD;
+    public static DcMotorSimple.Direction RIGHT_FLYWHEEL_MOTOR_DIRECTION = DcMotorSimple.Direction.REVERSE;
 
 }

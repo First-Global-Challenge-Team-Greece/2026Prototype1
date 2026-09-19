@@ -6,37 +6,27 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Subsystems.TankDrive;
-import org.firstinspires.ftc.teamcode.Util.ButtonToggle;
 @Disabled
 
 @TeleOp()
-public class CompleteTest extends OpMode {
-
-    private ButtonToggle intakeToggle;
+public class IntakeTest extends OpMode {
 
     private TankDrive tankDrive;
     private Intake intake;
 
     @Override
     public void init() {
-        intakeToggle = new ButtonToggle(300);
-        intake = new Intake(hardwareMap, telemetry);
         tankDrive = new TankDrive(hardwareMap, telemetry, TankDrive.DriveMode.ROBOT_CENTRIC);
-    }
 
+        intake = new Intake(hardwareMap, telemetry);
+    }
 
     @Override
     public void loop() {
-        if (gamepad1.dpad_up) {
-            intake.extend();
-        } else if (gamepad1.dpad_down) {
-            intake.retract();
-        }
-
-        if (intakeToggle.update(gamepad1.a)) intake.collect();
-        else intake.stop();
-
         tankDrive.driveRobotCentric(-gamepad1.left_stick_y, gamepad1.right_stick_x);
-        intake.extensionStateManager();
+
+        if (gamepad1.a) intake.collect();
+        else if (gamepad1.b) intake.drop();
+        else intake.stop();
     }
 }

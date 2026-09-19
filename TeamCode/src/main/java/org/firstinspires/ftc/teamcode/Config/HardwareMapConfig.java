@@ -21,7 +21,6 @@ public class HardwareMapConfig {
     public final static String intake_motor_id = "im";
 
     public final static String intake_extension_magnetic_sensor_id = "iems";
-    public final static String intake_retraction_magnetic_sensor_id = "irms";
 
     public static final String shooter_motor_id = "sm";
 
@@ -29,4 +28,25 @@ public class HardwareMapConfig {
     public static final String right_shooter_motor_id = "rsm";
 
     public static final String feeder_motor_id = "fm";
+
+    public static final String right_mixer_continuous_servo_id = "rmcr";
+    public static final String left_mixer_continuous_servo_id = "lmcr";
+
+    public static final String brace_motor_id = "bm";
+
+    public static final String left_brace_continuous_servo_id = "lbcr";
+    public static final String right_brace_continuous_servo_id = "rbcr";
+
+    public static String[] allMotors() {
+        return new String[] {
+                left_shooter_motor_id,
+                right_drive_motor_id,
+                left_shooter_motor_id,
+                right_shooter_motor_id,
+                intake_motor_id,
+                intake_extension_motor_id,
+                brace_motor_id,
+                feeder_motor_id
+        };
+    }
 }

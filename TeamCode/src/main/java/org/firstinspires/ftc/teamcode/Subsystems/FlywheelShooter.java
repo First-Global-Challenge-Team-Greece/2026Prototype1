@@ -11,6 +11,10 @@ public abstract class FlywheelShooter {
 
     protected ShooterState shooterState = ShooterState.STALLED;
 
+    protected double ballsPerSecond = 0;
+
+    protected ShooterBallCounter ballCounter = new ShooterBallCounter(VELOCITY_DROP_COUNT_THRESHOLD);
+
     protected void setVelocity(double velocity) {
         double feedForward = (kV * velocity) + kS * Math.signum(velocity);
         double error = velocity - getVelocity();
@@ -21,6 +25,8 @@ public abstract class FlywheelShooter {
 
     abstract void applyPower(double velocity);
     abstract double getVelocity();
+
+    abstract void shutdown();
 
     protected boolean isShooterRpmReady() {
         return getVelocity() > RPM_THRESHOLD;
@@ -54,7 +60,9 @@ public abstract class FlywheelShooter {
     }
 
     public void shoot() {
-        shooterState = ShooterState.CHARGING;
+        if (shooterState != ShooterState.READY) {
+            shooterState = ShooterState.CHARGING;
+        }
     }
 
     public void idle() {
@@ -69,6 +77,14 @@ public abstract class FlywheelShooter {
         telemetry.addData("Current Velocity", getVelocity());
         telemetry.addData("Is Shooter RPM Ready", isShooterRpmReady());
         telemetry.addData("Shooter State", shooterState);
+
+        telemetry.addData("Balls Shot", ballCounter.getBallCount());
+        telemetry.addData("Balls / S", ballsPerSecond);
+    }
+
+    public void updateBallCounts(double matchTimeSeconds) {
+        ballCounter.updateCount(getVelocity());
+        ballsPerSecond = ballCounter.getBallCount() / matchTimeSeconds;
     }
 
     public boolean isReady() {

@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.OpMode.Test;
 
 import com.github.bouyio.cyancore.debugger.Debuggers;
 import com.github.bouyio.cyancore.geomery.Point;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Subsystems.TankDrive;
+@Disabled
 
 @TeleOp()
 public class PointFollowingTest extends OpMode {

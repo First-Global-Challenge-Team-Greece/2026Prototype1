@@ -53,6 +53,14 @@ public class TankDrive {
 
     private IMU imu;
 
+    private int jiggleSign = -1;
+
+    private long lastJiggleSwitch;
+
+    private int jerkSign = -1;
+
+    private long lastJerkSwitch;
+
     public TankDrive(HardwareMap hardwareMap, Telemetry telemetry, DriveMode driveMode) {
         leftDrive = hardwareMap.get(DcMotorEx.class, HardwareMapConfig.left_drive_motor_id);
         rightDrive = hardwareMap.get(DcMotorEx.class, HardwareMapConfig.right_drive_motor_id);
@@ -98,6 +106,8 @@ public class TankDrive {
             pathFollower.attachExporters(exporter);
 
         }
+        lastJiggleSwitch = System.currentTimeMillis();
+        lastJerkSwitch = System.currentTimeMillis();
 
         autoTargetCoefficients = new PIDCoefficients(TankDriveConfig.AUTO_TARGET_KP, TankDriveConfig.AUTO_TARGET_KI, TankDriveConfig.AUTO_TARGET_KD);
         autotargetPID = new PIDController(autoTargetCoefficients);
@@ -121,6 +131,14 @@ public class TankDrive {
 
         driveRobotCentric(forward, turn);
 
+    }
+
+    public void drive(double forward, double turn) {
+        double denominator = Math.max(Math.abs(forward) + Math.abs(turn), 1);
+        double leftPower = (forward + turn) / denominator;
+        double rightPower = (forward - turn) / denominator;
+
+        setPowersWithFeedForward(leftPower, rightPower);
     }
 
     public void driveRobotCentric(double forward, double turn) {
@@ -223,9 +241,35 @@ public class TankDrive {
         telemetry.addLine("|----- Drivetrain -----|");
         telemetry.addData("Left Drive Current", leftDrive.getCurrent(CurrentUnit.AMPS));
         telemetry.addData("Right Drive Current", rightDrive.getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("Forward Velocity", forwardVelocity());
     }
 
     public void cyanDebug() {
         exporter.export();
     }
+
+    public void jiggle() {
+        if (System.currentTimeMillis() - lastJiggleSwitch > 300) {
+            lastJiggleSwitch = System.currentTimeMillis();
+            jiggleSign *= -1;
+        }
+
+        driveRobotCentric(0, jiggleSign * 0.8);
+    }
+
+    public void jerk(boolean SHOOTER_INTERFACE) {
+        if (!SHOOTER_INTERFACE) return;
+
+        if (System.currentTimeMillis() - lastJerkSwitch > 200) {
+            lastJerkSwitch = System.currentTimeMillis();
+            jerkSign *= -1;
+        }
+
+        driveRobotCentric(jerkSign * 0.8, 0);
+    }
+
+    public double forwardVelocity() {
+        return (leftDrive.getVelocity() + rightDrive.getVelocity()) / 2;
+    }
+
 }

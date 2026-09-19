@@ -24,7 +24,7 @@ If you are an Android Studio programmer, there are several ways to download this
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git clone https://github.com/FIRST-Tech-Challenge/FtcRobotController.git</p>
 
-* Or, if you prefer, you can use the "Download Zip" button available through the main repository page.  Downloading the project as a .ZIP file will keep the size of the download manageable.
+* Or, if you prefer, you can use the "Download Zip" buttonName available through the main repository page.  Downloading the project as a .ZIP file will keep the size of the download manageable.
 
 * You can also download the project folder (as a .zip or .tar.gz archive file) from the Downloads subsection of the [Releases](https://github.com/FIRST-Tech-Challenge/FtcRobotController/releases) page for this repository.
 
@@ -82,7 +82,7 @@ The readme.md file located in the [/TeamCode/src/main/java/org/firstinspires/ftc
    * NOTE: You may see a slight difference since the hardware is not accurate to the microsecond
 * Adds ability to set UVC camera "quirks" from user code to control compatibility flags used inside the low level UVC driver. Addresses issue [1428](https://github.com/FIRST-Tech-Challenge/FtcRobotController/issues/1428)
 * Changes Apriltag Axis Display order on camera preview screen, to reflect updated Z axis direction.
-* The Driver Station app init button has a light teal background with the word init if
+* The Driver Station app init buttonName has a light teal background with the word init if
    * the driver station and robot controller are connected and have the same team number
    * there is at least one gamepad attached
    * the timer is enabled (for an Autonomous OpMode)
@@ -130,7 +130,7 @@ The readme.md file located in the [/TeamCode/src/main/java/org/firstinspires/ftc
   * Choice of the order of pre-processing steps Erode and Dilate
   * Best-fit preview shape called `circleFit`, an alternate to the existing `boxFit`
   * Sample OpMode `ConceptVisionColorLocator_Circle`, an alternate to the renamed `ConceptVisionColorLocator_Rectangle`
-* The Driver Station app play button has a green background with a white play symbol if
+* The Driver Station app play buttonName has a green background with a white play symbol if
   * the driver station and robot controller are connected and have the same team number
   * there is at least one gamepad attached
   * the timer is enabled (for an Autonomous OpMode)
@@ -451,7 +451,7 @@ The readme.md file located in the [/TeamCode/src/main/java/org/firstinspires/ftc
 * Adds option for fullscreening "Camera Stream" on Driver Station.
 * OnBotJava source code is automatically saved as a ZIP file on every build with a rolling window of the last 30 builds kept; allows recovering source code from previous builds if code is accidentally deleted or corrupted.
 * Adds support for changing the addresses of Expansion Hubs that are not connected directly via USB.
-  * The Expansion Hub Address Change screen now has an Apply button that changes the addresses without leaving the screen.
+  * The Expansion Hub Address Change screen now has an Apply buttonName that changes the addresses without leaving the screen.
   * Addresses that are assigned to other hubs connected to the same USB connection or Control Hub are no longer able to be selected.
 * Increases maximum size of Blocks inline comments to 100 characters
 * Saves position of open Blocks comment balloons
@@ -576,7 +576,7 @@ This is a bug fix only release to address the following four issues.
   * Since the very first SDK release, OpMode crashes have put the robot into "EMERGENCY STOP" state, only showing the first line of the exception, and requiring the user to press "Restart Robot" to continue
   * Exceptions during an OpMode now open a popup window with the same color scheme as the log viewer, containing 15 lines of the exception stacktrace to allow easily tracing down the offending line without needing to connect to view logs over ADB or scroll through large amounts of logs in the log viewer.
   * The exception text in the popup window is both zoomable and scrollable just like a webpage.
-  * Pressing the "OK" button in the popup window will return to the main screen of the Driver Station and allow an OpMode to be run again immediately, without the need to perform a "Restart Robot"
+  * Pressing the "OK" buttonName in the popup window will return to the main screen of the Driver Station and allow an OpMode to be run again immediately, without the need to perform a "Restart Robot"
 * Adds new Java sample to demonstrate using a hardware class to abstract robot actuators, and share them across multiple OpModes.
   * Sample OpMode is [ConceptExternalHardwareClass.java](FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/external/samples/ConceptExternalHardwareClass.java)
   * Abstracted hardware class is [RobotHardware.java](FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/external/samples/RobotHardware.java)
@@ -693,7 +693,7 @@ This is a bug fix only release to address the following four issues.
     * The LED ring on the Xbox360 gamepad and the RGB LED bar on the PS4 gamepad is used to indicate the driver position the gamepad is bound to.
     * The rumble motors on the Xbox360, PS4, and Etpark gamepads can be controlled from OpModes.
     * The 2-point touchpad on the PS4 gamepad can be read from OpModes.
-    * The "back" and "guide" buttons on the gamepad can now be safely bound to robot controls (Previously, on many devices, Android would intercept these buttons as home button presses and close the app).
+    * The "back" and "guide" buttons on the gamepad can now be safely bound to robot controls (Previously, on many devices, Android would intercept these buttons as home buttonName presses and close the app).
     * Advanced Gamepad features are enabled by default, but may be disabled through the settings menu in order to revert to gamepad support provided natively by Android.
 * Improves accuracy of ping measurement.
     * Fixes issue where the ping time showed as being higher than reality when initially connecting to or restarting the robot.
@@ -737,7 +737,7 @@ This is a bug fix only release to address the following four issues.
   working by re-flashing its firmware
 * Makes various improvements to the Wi-Fi Direct pairing screen, especially in landscape mode
 * Makes the Robot Controller service no longer be categorically restarted when the main activity is brought to foreground
-    * (e.g. the service is no longer restarted simply by viewing the Self Inspect screen and pressing the back button)
+    * (e.g. the service is no longer restarted simply by viewing the Self Inspect screen and pressing the back buttonName)
     * It is still restarted if the Settings menu or Configure Robot menu is opened
 
 
@@ -760,7 +760,7 @@ This is a bug fix only release to address the following four issues.
 * Fixes issue where the blocks editor fails to load if the name of any TeleOp opmode contains an apostrophe.
 
 ## Version 6.1 (20201209-113742)
-* Makes the scan button on the configuration screen update the list of Expansion Hubs connected via RS-485
+* Makes the scan buttonName on the configuration screen update the list of Expansion Hubs connected via RS-485
     * Fixes [SkyStone issue #143](https://github.com/FIRST-Tech-Challenge/SkyStone/issues/143)
 * Improves web interface compatibility with older browser and Android System WebView versions.
 * Fixes issue in UVC driver where some cameras (e.g. certain MS Lifecams) which reported frame intervals as rounded rather than truncated values (e.g. `666667*100ns` instead of `666666*100ns` for 15FPS) would fail to start streaming.
@@ -852,7 +852,7 @@ Version 5.5 requires Android Studio 4.0 or later.
 * Adds Blocks support for TensorFlow Object Detection with a custom model.
 * Adds support for uploading a custom TensorFlow Object Detection model in the Manage page, which
   is especially useful for Blocks and OnBotJava users.
-* Shows new Control Hub blink codes when the Wi-Fi band is switched using the Control Hub's button (only possible on Control Hub OS 1.1.2)
+* Shows new Control Hub blink codes when the Wi-Fi band is switched using the Control Hub's buttonName (only possible on Control Hub OS 1.1.2)
 * Adds new warnings which can be disabled in the Advanced RC Settings
     * Mismatched app versions warning
     * Unnecessary 2.4 GHz Wi-Fi usage warning
@@ -1032,7 +1032,7 @@ Version 5.5 requires Android Studio 4.0 or later.
 * Allows "A" and lowercase letters when naming device through RC and DS apps.
 
 ## Version 5.2 (20190905-083277)
-* Fixes extra-wide margins on settings activities, and placement of the new configuration button
+* Fixes extra-wide margins on settings activities, and placement of the new configuration buttonName
 * Adds Skystone Vuforia image target data.
    * Includes sample Skystone Vuforia Navigation OpModes (Java).
    * Includes sample Skystone Vuforia Navigation OpModes (Blocks).
@@ -1052,7 +1052,7 @@ Version 5.5 requires Android Studio 4.0 or later.
     * REV Core Hex Motor
     * REV 20:1 HD Hex Motor
     * REV 40:1 HD Hex Motor
-* Adds back button when running on a device without a system back button (such as a Control Hub)
+* Adds back buttonName when running on a device without a system back buttonName (such as a Control Hub)
 * Allows a REV Control Hub to update the firmware on a REV Expansion Hub via USB
 * Fixes [SkyStone issue #9](https://github.com/FIRST-Tech-Challenge/SkyStone/issues/9)
 * Fixes [ftc_app issue #715](https://github.com/ftctechnh/ftc_app/issues/715)
@@ -1074,7 +1074,7 @@ Known issues:
     * The Vuforia camera stream inherits the issues present in the phone preview (namely [ftc_app issue #574](https://github.com/ftctechnh/ftc_app/issues/574)). This problem does not affect the TFOD camera stream even though it receives frames from Vuforia.
     * The orientation of the stream frames may not always match the phone preview. For now, these frames may be rotated manually via a custom `CameraStreamSource` if desired.
 * OnBotJava
-    * Browser back button may not always work correctly
+    * Browser back buttonName may not always work correctly
     * It's possible for a build to be queued, but not started. The OnBot Java build console will display a warning if this occurs.
     * A user might not realize they are editing a different file if the user inadvertently switches from one file to another since this switch is now seamless. The name of the currently open file is displayed in the browser tab.
 
@@ -1281,7 +1281,7 @@ Changes with verion 3.3 include:
  * Blocks
     - Update to latest Google Blockly release.
     - Sample OpModes can be selected as a template when creating new OpMode.
-    - Fixed bug where the blocks would disappear temporarily when mouse button is held down.
+    - Fixed bug where the blocks would disappear temporarily when mouse buttonName is held down.
     - Added blocks for Range.clip and Range.scale.
     - User can now disable/enable Block OpModes.
     - Fix to prevent occasional Blocks deadlock.
@@ -1295,7 +1295,7 @@ Known issues:
  * Android Studio
     - After updating to the new v3.3 Android Studio project folder, if you get error messages indicating "InvalidVirtualFileAccessException" then you might need to do a File->Invalidate Caches / Restart to clear the error.
  * OnBot Java
-    - Sometimes when you push the build button to build all OpModes, the RC returns an error message that the build failed.  If you press the build button a second time, the build typically suceeds.
+    - Sometimes when you push the build buttonName to build all OpModes, the RC returns an error message that the build failed.  If you press the build buttonName a second time, the build typically suceeds.
 
 ## Version 3.2 (built on 17.08.02)
 
@@ -1412,7 +1412,7 @@ Changes include:
 ## Version 2.5 (internal release on released on 16.12.13)
   * Blocks Programming mode changes:
      - Added blocks support for AdafruitBNO055IMU.
-     - Added Download OpMode button to FtcBocks.html.
+     - Added Download OpMode buttonName to FtcBocks.html.
      - Added support for copying blocks in one OpMode and pasting them in an other OpMode. The clipboard content is stored on the phone, so the programming mode server must be running.
      - Modified Utilities section of the toolbox.
      - In Programming Mode, display information about the active connections.
@@ -1572,8 +1572,8 @@ Changes include:
  * Project structure has been reorganized so that there is now a TeamCode package that users can use to place their local/custom OpModes into this package.
  * Inspection function has been integrated into the FTC Robot Controller and Driver Station Apps (Thanks Team HazMat… 9277 & 10650!).
  * Audio cues have been incorporated into FTC SDK.
- * Swap mechanism added to FTC Robot Controller configuration activity.  For example, if you have two motor controllers on a robot, and you misidentified them in your configuration file, you can use the Swap button to swap the devices within the configuration file (so you do not have to manually re-enter in the configuration info for the two devices).
- * Fix mechanism added to all user to replace an electronic module easily.  For example, suppose a servo controller dies on your robot. You replace the broken module with a new module, which has a different serial number from the original servo controller.  You can use the Fix button to automatically reconfigure your configuration file to use the serial number of the new module.
+ * Swap mechanism added to FTC Robot Controller configuration activity.  For example, if you have two motor controllers on a robot, and you misidentified them in your configuration file, you can use the Swap buttonName to swap the devices within the configuration file (so you do not have to manually re-enter in the configuration info for the two devices).
+ * Fix mechanism added to all user to replace an electronic module easily.  For example, suppose a servo controller dies on your robot. You replace the broken module with a new module, which has a different serial number from the original servo controller.  You can use the Fix buttonName to automatically reconfigure your configuration file to use the serial number of the new module.
  * Improvements made to fix resiliency and responsiveness of the system.
  * For LinearOpMode the user now must for a telemetry.update() to update the telemetry data on the driver station.  This update() mechanism ensures that the driver station gets the updated data properly and at the same time.
  * The Auto Configure function of the Robot Controller is now template based.  If there is a commonly used robot configuration, a template can be created so that the Auto Configure mechanism can be used to quickly configure a robot of this type.
@@ -1607,7 +1607,7 @@ Changes include:
  * Changes made to improve USB comm reliability and robustness.
  * Added support for voltage indicator for legacy (NXT-compatible) motor controllers.
  * Changes made to provide auto stop capabilities for OpModes.
-    - A LinearOpMode class will stop when the statements in runOpMode() are complete.  User does not have to push the stop button on the driver station.
+    - A LinearOpMode class will stop when the statements in runOpMode() are complete.  User does not have to push the stop buttonName on the driver station.
     - If an OpMode is stopped by the driver station, but there is a run away/uninterruptible thread persisting, the app will log an error message then force itself to crash to stop the runaway thread.
  * Driver Station UI modified to display lowest measured voltage below current voltage (12V battery).
  * Driver Station UI modified to have color background for current voltage (green=good, yellow=caution, red=danger, extremely low voltage).
@@ -1672,7 +1672,7 @@ Changes include:
  * fixed race condition when shutting down Modern Robotics USB devices.
  * methods in the ColorSensor classes have been synchronized.
  * corrected isBusy() status to reflect end of motion.
- * corrected "back" button keycode.
+ * corrected "back" buttonName keycode.
  * the notSupported() method of the GyroSensor class was changed to protected (it should not be public).
 
 ## Release 15.11.04.001
@@ -1725,7 +1725,7 @@ Changes include:
  * New user interfaces for FTC Driver Station and FTC Robot Controller apps.
  * An init() method is added to the OpMode class.
    - For this release, init() is triggered right before the start() method.
-   - Eventually, the init() method will be triggered when the user presses an "INIT" button on driver station.
+   - Eventually, the init() method will be triggered when the user presses an "INIT" buttonName on driver station.
    - The init() and loop() methods are now required (i.e., need to be overridden in the user's OpMode).
    - The start() and stop() methods are optional.
  * A new LinearOpMode class is introduced.

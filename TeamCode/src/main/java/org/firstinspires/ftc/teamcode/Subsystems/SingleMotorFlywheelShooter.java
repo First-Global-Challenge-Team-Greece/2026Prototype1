@@ -24,4 +24,9 @@ public class SingleMotorFlywheelShooter extends FlywheelShooter {
     double getVelocity() {
         return shooterMotor.getVelocity() * FlywheelShooterConfig.SECOND_TO_MINUTE_COEFFICIENT / FlywheelShooterConfig.ENCODER_CPR;
     }
+
+    @Override
+    void shutdown() {
+        shooterMotor.close();
+    }
 }

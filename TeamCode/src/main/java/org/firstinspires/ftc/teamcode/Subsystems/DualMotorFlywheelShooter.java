@@ -15,6 +15,8 @@ public class DualMotorFlywheelShooter extends FlywheelShooter {
 
     private final Telemetry telemetry;
 
+    private boolean isActive = true;
+
     public DualMotorFlywheelShooter(HardwareMap hardwareMap, Telemetry telemetry) {
         leftShooterMotor = hardwareMap.get(DcMotorEx.class, HardwareMapConfig.left_shooter_motor_id);
         rightShooterMotor = hardwareMap.get(DcMotorEx.class, HardwareMapConfig.right_shooter_motor_id);
@@ -34,6 +36,27 @@ public class DualMotorFlywheelShooter extends FlywheelShooter {
     double getVelocity() {
         return ((leftShooterMotor.getVelocity() * FlywheelShooterConfig.SECOND_TO_MINUTE_COEFFICIENT / FlywheelShooterConfig.ENCODER_CPR) +
                 (rightShooterMotor.getVelocity() * FlywheelShooterConfig.SECOND_TO_MINUTE_COEFFICIENT / FlywheelShooterConfig.ENCODER_CPR)) / 2;
+    }
+
+    @Override
+    public void shutdown() {
+        shooterState = ShooterState.STALLED;
+        isActive = false;
+
+        leftShooterMotor.close();
+        rightShooterMotor.close();
+    }
+
+    @Override
+    public void idle() {
+        if (!isActive) return;
+        super.idle();
+    }
+
+    @Override
+    public void shoot() {
+        if (!isActive) return;
+        super.shoot();
     }
 
     public double[] getMotorCurrents() {

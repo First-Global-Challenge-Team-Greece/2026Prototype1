@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpMode.Test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 import java.util.Optional;
 
+@Disabled
 @TeleOp()
 public class AprilTagTest extends OpMode {
 
@@ -23,7 +25,7 @@ public class AprilTagTest extends OpMode {
 
         tagCamera = new TagCamera(hardwareMap, telemetry);
 
-        driverNotifier = new DriverNotifier(telemetry, gamepad1);
+        driverNotifier = new DriverNotifier(gamepad1);
     }
 
     @Override

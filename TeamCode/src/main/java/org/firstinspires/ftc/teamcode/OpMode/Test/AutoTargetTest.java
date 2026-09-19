@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.OpMode.Test;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Subsystems.TankDrive;
 import org.firstinspires.ftc.teamcode.Subsystems.Vision.WildfireCamera;
 
+@Disabled
 @TeleOp()
 public class AutoTargetTest extends OpMode {
 

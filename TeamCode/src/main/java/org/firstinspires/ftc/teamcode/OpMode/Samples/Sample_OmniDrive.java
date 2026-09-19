@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpMode.Samples;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.OmniDrive;
  *     Ένα παράδειχμα χρήσης του κώδικα για omni βάσεις (π.χ. xDrive, mecanum).
  * </p>
  * */
+@Disabled
 @TeleOp()
 public class Sample_OmniDrive extends OpMode {
 
